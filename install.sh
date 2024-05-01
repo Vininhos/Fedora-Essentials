@@ -3,12 +3,6 @@
 # Upgrade the system
 sudo dnf upgrade -y
 
-sudo dnf install gnome-tweaks -y
-
-sudo dnf install neovim -y
-
-sudo dnf install gnome-console -y
-
 # Git
 sudo dnf install git -y
 
@@ -21,9 +15,8 @@ sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 
 sudo dnf install brave-browser -y
 
-sudo dnf install cronie -y
-
-sudo dnf install fastfetch -y
+# Some system utils
+sudo dnf install fastfetch cronie gnome-tweaks gnome-console gnome-themes-extra -y
 
 sudo sh -c 'echo max_parallel_downloads=10 >> /etc/dnf/dnf.conf'
 
@@ -34,9 +27,6 @@ sudo dnf groupupdate core -y
 sudo dnf swap ffmpeg-free ffmpeg --allowerasing -y
 sudo dnf groupupdate multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin -y
 sudo dnf groupupdate sound-and-video -y
-
-# Gnome Themes Extra
-sudo dnf install gnome-themes-extra -y
 
 # Flatpak
 sudo dnf install flatpak -y
@@ -58,6 +48,13 @@ sudo dnf -y install dnf-plugins-core
 sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo -y
 sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
+# NVM
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+# Kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
 # HomeBrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
@@ -66,16 +63,15 @@ brew install k9s
 brew install lazydocker
 brew install lazygit
 
-#LazyVim
-git clone https://github.com/LazyVim/starter ~/.config/nvim
-rm -rf ~/.config/nvim/.git
+# Rust and Cargo
+sudo dnf install rust cargo -y
 
-# NVM
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+# Utils for LunarVim
+sudo dnf install fd-find -ripgrep y
 
-# Kubectl
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+#LunarVim
+sudo dnf install neovim -y
+LV_BRANCH='release-1.3/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh)
 
 #Zsh
 sudo dnf install zsh -y
