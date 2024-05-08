@@ -62,12 +62,12 @@ sudo usermod -aG docker $USER
 # NVM
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 
-# Kubectl
+# Install Kubectl.
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 rm kubectl
 
-# HomeBrew
+# Install HomeBrew.
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
@@ -75,17 +75,17 @@ brew install k9s
 brew install lazydocker
 brew install lazygit
 
-# Rust and Cargo
+# Rust and Cargo for LunarVim dependencies.
 sudo dnf install rust cargo -y
 
-# Utils for LunarVim
+# Utils for LunarVim.
 sudo dnf install fd-find -ripgrep y
 
-#LunarVim
+# Install LunarVim.
 sudo dnf install neovim -y
 LV_BRANCH='release-1.3/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh)
 echo 
 
-#Zsh
+# Install Zsh.
 sudo dnf install zsh -y
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
