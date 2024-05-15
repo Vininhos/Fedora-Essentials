@@ -1,4 +1,4 @@
- #!/bin/bash
+#!/bin/bash
 
 # Upgrade the system
 sudo dnf upgrade -y
@@ -18,9 +18,14 @@ sudo dnf install brave-browser -y
 # Install some system utils.
 sudo dnf install fastfetch cronie -y
 
-# Install some GNOME core apps (for me).
-if [[ "$DESKTOP_SESSION" != "plasma" ]]; then
+# Install some core apps GNOME (for me).
+if [ "$DESKTOP_SESSION" = "gnome" ]; then
   sudo dnf install gnome-tweaks gnome-console gnome-themes-extra -y
+fi
+
+# Install TWM essential softwares.
+if [ "$DESKTOP_SESSION" = "sway" || "$DESKTOP_SESSION" = "hyprland" ]; then
+  sudo dnf install alacritty gammastep gammastep-indicator btop gnome-themes-extra -y
 fi
 
 # Improve Fedora's max parallel download by increasing the limit to 10.
@@ -59,7 +64,7 @@ sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/dock
 sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 sudo usermod -aG docker $USER
 
-# NVM
+# Install NVM.
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 
 # Install Kubectl.
@@ -67,9 +72,8 @@ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stabl
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 rm kubectl
 
-# Install HomeBrew.
+# Install HomeBrew and some softwares with this package manager.
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 brew install k9s
 brew install lazydocker
@@ -89,3 +93,4 @@ echo
 # Install Zsh.
 sudo dnf install zsh -y
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
