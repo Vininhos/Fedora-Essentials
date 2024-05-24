@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Uses /tmp to clone repos and install things.
+cd /tmp
+
 # Upgrade the system
 sudo dnf upgrade -y
 
@@ -16,7 +19,11 @@ sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 sudo dnf install brave-browser -y
 
 # Install some system utils.
-sudo dnf install fastfetch cronie -y
+sudo dnf install fastfetch cronie gnome-fonts xclip wl-clipboard \ 
+feh gtk3-devel cairo-devel glib-devel glib2 make -y
+
+# Install QT6 packages for SDDM Themes.
+sudo dnf install qt6-qtquickcontrols2 qt6-qtsvg
 
 # Install some core apps GNOME (for me).
 if [ "$DESKTOP_SESSION" = "gnome" ]; then
@@ -25,7 +32,8 @@ fi
 
 # Install TWM essential softwares.
 if [ "$DESKTOP_SESSION" = "sway" || "$DESKTOP_SESSION" = "hyprland" ]; then
-  sudo dnf install alacritty gammastep gammastep-indicator btop gnome-themes-extra -y
+  sudo dnf install alacritty gammastep gammastep-indicator btop gnome-themes-extra \
+  papirus-icon-theme -y
 fi
 
 # Improve Fedora's max parallel download by increasing the limit to 10.
@@ -51,6 +59,7 @@ flatpak install flathub info.febvre.Komikku -y
 flatpak install flathub com.usebruno.Bruno -y
 flatpak install flathub net.sapples.LiveCaptions -y
 flatpak install flathub com.spotify.Client -y
+flatpak install flathub org.mozilla.Thunderbird -y
 
 # Install JetBrains Mono Nerd fonts.
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip
@@ -89,6 +98,14 @@ sudo dnf install fd-find -ripgrep y
 sudo dnf install neovim -y
 LV_BRANCH='release-1.3/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh)
 echo 
+
+# Theming
+
+git clone https://github.com/nwg-piotr/nwg-look.git
+make build nwg-look/ && sudo make install nwg-look/
+
+curl -LsS "https://raw.githubusercontent.com/catppuccin/gtk/main/install.py" -o install.py
+python3 install.py mocha mauve
 
 # Install Zsh.
 sudo dnf install zsh -y
