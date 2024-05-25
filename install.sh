@@ -54,7 +54,7 @@ echo "@nClientDownloadEnableHTTP2PlatformLinux 0" > ~/.steam/steam/steam_dev.cfg
 # Install Flatpak and some cool apps.
 sudo dnf install flatpak -y
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install flathub com.discordapp.Discord -y
+flatpak install flathub dev.vencord.Vesktop -y
 flatpak install flathub info.febvre.Komikku -y
 flatpak install flathub com.usebruno.Bruno -y
 flatpak install flathub net.sapples.LiveCaptions -y
